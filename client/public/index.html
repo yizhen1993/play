@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Kopi Dash — Malaysian Cooking Dash Kopitiam</title>
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>☕</text></svg>">
+</head>
+<body>
+  <div id="game-wrapper">
+    <!-- Top HUD Bar -->
+    <header id="top-hud">
+      <div class="hud-left">
+        <div class="brand">
+          <span class="brand-icon">☕</span>
+          <span class="brand-title">KOPI DASH</span>
+        </div>
+        <div id="hud-level" class="hud-badge">Level 1</div>
+        <div id="hud-combo" class="hud-badge combo-badge" style="display:none;">🔥 2X COMBO!</div>
+      </div>
+
+      <div class="hud-center">
+        <div class="hud-stat">
+          <span class="stat-label">EARNINGS</span>
+          <span id="hud-score" class="stat-value">RM 0</span>
+        </div>
+        <div class="hud-stat">
+          <span class="stat-label">TARGET</span>
+          <span id="hud-target" class="stat-value">Goal: RM 120</span>
+        </div>
+        <div class="hud-stat">
+          <span class="stat-label">TIME</span>
+          <span id="hud-timer" class="stat-value timer-value">⏳ 1:50</span>
+        </div>
+      </div>
+
+      <div class="hud-right">
+        <div class="hud-stat">
+          <span class="stat-label">SAVED BANK</span>
+          <span id="hud-total-coins" class="stat-value coin-value">💰 RM 0</span>
+        </div>
+        <button id="btn-open-levels" class="hud-btn" title="Choose Level">🗺️ Stages</button>
+        <button id="btn-open-shop" class="hud-btn highlight-btn" title="Kitchen Upgrades Shop">🛒 Shop</button>
+        <button id="btn-open-menu" class="hud-btn" title="Malaysian Recipe Book">📖 Menu</button>
+        <button id="btn-mute" class="hud-btn sound-btn" title="Toggle Audio">🔊 Sound ON</button>
+      </div>
+    </header>
+
+    <!-- Canvas Container -->
+    <main id="canvas-container">
+      <canvas id="game-canvas"></canvas>
+    </main>
+
+    <!-- Bottom Skills & Boosters Bar -->
+    <footer id="bottom-bar">
+      <div class="skills-wrapper">
+        <div class="skills-label">⚡ POWER SKILLS:</div>
+        <div id="skills-bar">
+          <!-- Dynamically populated skills buttons -->
+        </div>
+      </div>
+      <div class="instructions-hint">
+        💡 <strong>Cooking Dash Controls:</strong> Click woks/fryer to cook • Click ready dish to pick up • Click table to seat customers & serve dishes • Click dirty tables to collect cash & dishes • Click sink to wash • Discard burnt food in trash.
+      </div>
+    </footer>
+  </div>
+
+  <!-- Modal Overlay -->
+  <div id="modal-overlay" class="modal-overlay" style="display:none;">
+    <!-- Level Recap Modal -->
+    <div id="recap-modal" class="modal-content" style="display:none;">
+      <h2 id="recap-title">Level Complete!</h2>
+      <div id="recap-stars" class="stars-rating">⭐⭐⭐</div>
+      <div class="recap-stats">
+        <div id="recap-score" class="recap-stat-line">Earned: RM 0</div>
+        <div id="recap-goal" class="recap-stat-line">Target: RM 0</div>
+      </div>
+      <div class="modal-buttons">
+        <button id="btn-recap-replay" class="modal-btn secondary-btn">↺ Replay Level</button>
+        <button id="btn-recap-next" class="modal-btn primary-btn">Next Level ➔</button>
+      </div>
+    </div>
+
+    <!-- Kitchen Upgrades Shop Modal -->
+    <div id="shop-modal" class="modal-content modal-wide" style="display:none;">
+      <div class="modal-header">
+        <h2>🛒 Kopitiam Kitchen Upgrades</h2>
+        <button id="btn-close-shop" class="modal-close-btn">&times;</button>
+      </div>
+      <p class="modal-subtitle">Invest your hard-earned Ringgits into faster woks, bigger trays, and better equipment!</p>
+      <div id="shop-items-list" class="shop-grid">
+        <!-- Injected by upgrades.js -->
+      </div>
+    </div>
+
+    <!-- Malaysian Menu Recipe Book Modal -->
+    <div id="menu-modal" class="modal-content modal-wide" style="display:none;">
+      <div class="modal-header">
+        <h2>📖 Authentic Malaysian Kopitiam & Mamak Menu</h2>
+        <button id="btn-close-menu" class="modal-close-btn">&times;</button>
+      </div>
+      <p class="modal-subtitle">Every recipe from Cooking Dash replaced with authentic Malaysian delicacies!</p>
+      
+      <div class="menu-tabs-content">
+        <h3>🥘 Signature Malaysian Main Dishes</h3>
+        <div id="menu-recipes-list" class="menu-items-grid"></div>
+
+        <h3 style="margin-top:20px;">☕ Kopitiam & Mamak Beverages</h3>
+        <div id="menu-drinks-list" class="menu-items-grid"></div>
+
+        <h3 style="margin-top:20px;">🥟 Instant Patience Treats</h3>
+        <div class="menu-items-grid">
+          <div class="menu-dish-item">
+            <div class="menu-dish-header">
+              <strong>🥟 Crispy Karipap (Curry Puff)</strong>
+              <span class="menu-dish-price">+40% Hearts</span>
+            </div>
+            <p class="menu-dish-desc">Golden spiral pleated crust filled with spicy curried potatoes and boiled egg. Serve immediately to calm impatient customers!</p>
+          </div>
+          <div class="menu-dish-item">
+            <div class="menu-dish-header">
+              <strong>🍰 Rainbow Kuih Lapis</strong>
+              <span class="menu-dish-price">+50% Hearts</span>
+            </div>
+            <p class="menu-dish-desc">Vibrant multi-layered steamed sweet coconut pandan cake. Restores half the customer's patience meter in an instant!</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Level Select Modal -->
+    <div id="level-select-modal" class="modal-content modal-wide" style="display:none;">
+      <div class="modal-header">
+        <h2>🗺️ Select Shift / Stage</h2>
+        <button onclick="document.getElementById('modal-overlay').style.display='none';document.getElementById('level-select-modal').style.display='none';" class="modal-close-btn">&times;</button>
+      </div>
+      <div id="level-select-list" class="level-select-grid"></div>
+    </div>
+  </div>
+
+  <script type="module" src="js/game.js"></script>
+</body>
+</html>

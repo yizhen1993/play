@@ -1,0 +1,584 @@
+/* ==========================================================================
+   Malaysian Cooking Dash — Retro Arcade Kopitiam Stylesheet
+   ========================================================================== */
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+body {
+  background-color: #0F172A;
+  color: #F8FAFC;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  overflow: hidden;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+#game-wrapper {
+  display: flex;
+  flex-direction: column;
+  width: 100vw;
+  max-width: 1100px;
+  height: 100vh;
+  max-height: 720px;
+  background-color: #1E293B;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.6);
+  border-radius: 12px;
+  border: 2px solid #334155;
+  overflow: hidden;
+}
+
+/* ==========================================================================
+   Top HUD Bar
+   ========================================================================== */
+#top-hud {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 8px 16px;
+  background: linear-gradient(180deg, #1E293B 0%, #0F172A 100%);
+  border-bottom: 2px solid #475569;
+  height: 60px;
+  z-index: 10;
+}
+
+.hud-left, .hud-center, .hud-right {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-weight: 900;
+  font-size: 1.15rem;
+  color: #FBBF24;
+  letter-spacing: 0.5px;
+  text-shadow: 0 2px 4px rgba(0,0,0,0.5);
+}
+
+.brand-icon {
+  font-size: 1.4rem;
+}
+
+.hud-badge {
+  background: #047857;
+  color: #ECFDF5;
+  padding: 4px 10px;
+  border-radius: 6px;
+  font-weight: 700;
+  font-size: 0.85rem;
+  border: 1px solid #059669;
+}
+
+.combo-badge {
+  background: #DC2626;
+  color: #FEF2F2;
+  border-color: #EF4444;
+  animation: pulse 0.7s infinite alternate;
+}
+
+@keyframes pulse {
+  from { transform: scale(1); }
+  to { transform: scale(1.08); }
+}
+
+.hud-stat {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.stat-label {
+  font-size: 0.65rem;
+  font-weight: 700;
+  color: #94A3B8;
+  letter-spacing: 0.5px;
+}
+
+.stat-value {
+  font-size: 1.1rem;
+  font-weight: 800;
+  color: #F59E0B;
+}
+
+.timer-value {
+  color: #38BDF8;
+}
+
+.coin-value {
+  color: #34D399;
+}
+
+.hud-btn {
+  background: #334155;
+  color: #F8FAFC;
+  border: 1px solid #475569;
+  padding: 6px 12px;
+  border-radius: 6px;
+  font-size: 0.85rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.hud-btn:hover {
+  background: #475569;
+  transform: translateY(-1px);
+}
+
+.highlight-btn {
+  background: #D97706;
+  border-color: #F59E0B;
+  color: #FFF;
+}
+
+.highlight-btn:hover {
+  background: #B45309;
+}
+
+.sound-btn {
+  background: #1E293B;
+  border-color: #64748B;
+}
+
+/* ==========================================================================
+   Canvas Main Game Area
+   ========================================================================== */
+#canvas-container {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #0F172A;
+  position: relative;
+  overflow: hidden;
+}
+
+#game-canvas {
+  width: 100%;
+  height: 100%;
+  max-width: 1040px;
+  max-height: 580px;
+  object-fit: contain;
+  cursor: pointer;
+  background-color: #F3EDE2;
+}
+
+/* ==========================================================================
+   Bottom Action Bar & Skills
+   ========================================================================== */
+#bottom-bar {
+  background: linear-gradient(180deg, #0F172A 0%, #1E293B 100%);
+  border-top: 2px solid #334155;
+  padding: 8px 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  z-index: 10;
+}
+
+.skills-wrapper {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.skills-label {
+  font-size: 0.85rem;
+  font-weight: 800;
+  color: #FBBF24;
+  letter-spacing: 0.5px;
+  white-space: nowrap;
+}
+
+#skills-bar {
+  display: flex;
+  gap: 8px;
+  flex: 1;
+}
+
+.skill-btn {
+  position: relative;
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  padding: 6px 10px;
+  background: #1E293B;
+  border: 2px solid #475569;
+  border-radius: 8px;
+  color: #F8FAFC;
+  cursor: pointer;
+  font-weight: 700;
+  font-size: 0.82rem;
+  overflow: hidden;
+  transition: all 0.15s ease;
+}
+
+.skill-btn:hover {
+  border-color: #F59E0B;
+  background: #334155;
+  transform: translateY(-1px);
+}
+
+.skill-icon {
+  font-size: 1.1rem;
+}
+
+.skill-key {
+  font-size: 0.72rem;
+  color: #94A3B8;
+  margin-left: 2px;
+}
+
+.skill-cooldown-overlay {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 0%;
+  background: rgba(0, 0, 0, 0.65);
+  pointer-events: none;
+  transition: height 0.1s linear;
+}
+
+.skill-btn.on-cooldown {
+  opacity: 0.65;
+  cursor: not-allowed;
+  border-color: #334155;
+}
+
+.skill-btn.is-active-skill {
+  border-color: #10B981;
+  box-shadow: 0 0 10px rgba(16, 185, 129, 0.6);
+  background: #064E3B;
+}
+
+.instructions-hint {
+  font-size: 0.75rem;
+  color: #94A3B8;
+  text-align: center;
+  letter-spacing: 0.2px;
+}
+
+/* ==========================================================================
+   Modals
+   ========================================================================== */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.8);
+  backdrop-filter: blur(4px);
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.modal-content {
+  background: #1E293B;
+  border: 2px solid #475569;
+  border-radius: 12px;
+  padding: 24px;
+  width: 90%;
+  max-width: 450px;
+  text-align: center;
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.7);
+  animation: modalIn 0.2s ease-out;
+}
+
+.modal-wide {
+  max-width: 680px;
+  max-height: 85vh;
+  overflow-y: auto;
+  text-align: left;
+}
+
+@keyframes modalIn {
+  from { transform: scale(0.92); opacity: 0; }
+  to { transform: scale(1); opacity: 1; }
+}
+
+.modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 8px;
+}
+
+.modal-subtitle {
+  color: #94A3B8;
+  font-size: 0.9rem;
+  margin-bottom: 16px;
+}
+
+.modal-close-btn {
+  background: none;
+  border: none;
+  font-size: 1.8rem;
+  color: #94A3B8;
+  cursor: pointer;
+  line-height: 1;
+}
+
+.modal-close-btn:hover {
+  color: #F8FAFC;
+}
+
+.stars-rating {
+  font-size: 2.8rem;
+  margin: 12px 0;
+  color: #FBBF24;
+  letter-spacing: 4px;
+}
+
+.recap-stats {
+  background: #0F172A;
+  border-radius: 8px;
+  padding: 12px;
+  margin-bottom: 20px;
+  border: 1px solid #334155;
+}
+
+.recap-stat-line {
+  font-size: 1.15rem;
+  font-weight: 700;
+  margin: 4px 0;
+}
+
+.modal-buttons {
+  display: flex;
+  gap: 12px;
+  justify-content: center;
+}
+
+.modal-btn {
+  padding: 10px 20px;
+  border-radius: 8px;
+  font-size: 1rem;
+  font-weight: 700;
+  cursor: pointer;
+  border: none;
+  transition: all 0.15s ease;
+}
+
+.primary-btn {
+  background: #10B981;
+  color: #FFFFFF;
+}
+
+.primary-btn:hover {
+  background: #059669;
+  transform: translateY(-1px);
+}
+
+.secondary-btn {
+  background: #475569;
+  color: #F8FAFC;
+}
+
+.secondary-btn:hover {
+  background: #64748B;
+}
+
+/* ==========================================================================
+   Shop Grid
+   ========================================================================== */
+.shop-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-top: 10px;
+}
+
+.shop-card {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  background: #0F172A;
+  border: 1px solid #334155;
+  border-radius: 10px;
+  padding: 12px 16px;
+}
+
+.shop-icon {
+  font-size: 2rem;
+  background: #1E293B;
+  padding: 8px;
+  border-radius: 8px;
+  width: 50px;
+  height: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.shop-info {
+  flex: 1;
+}
+
+.shop-name {
+  font-size: 1rem;
+  font-weight: 700;
+  color: #F8FAFC;
+  margin-bottom: 2px;
+}
+
+.shop-desc {
+  font-size: 0.8rem;
+  color: #94A3B8;
+  line-height: 1.3;
+}
+
+.btn-buy {
+  background: #D97706;
+  color: #FFF;
+  border: none;
+  font-weight: 800;
+  padding: 8px 14px;
+  border-radius: 6px;
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+.btn-buy:disabled {
+  background: #475569;
+  color: #94A3B8;
+  cursor: not-allowed;
+}
+
+.btn-buy:not(:disabled):hover {
+  background: #B45309;
+}
+
+.badge-bought {
+  background: #065F46;
+  color: #34D399;
+  padding: 6px 12px;
+  border-radius: 6px;
+  font-weight: 800;
+  font-size: 0.85rem;
+}
+
+/* ==========================================================================
+   Menu & Recipes Grid
+   ========================================================================== */
+.menu-items-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 12px;
+  margin-top: 10px;
+}
+
+.menu-dish-item {
+  background: #0F172A;
+  border: 1px solid #334155;
+  border-radius: 8px;
+  padding: 12px;
+}
+
+.menu-dish-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 6px;
+  font-size: 0.95rem;
+  color: #FEF08A;
+}
+
+.menu-dish-price {
+  background: #D97706;
+  color: #FFF;
+  font-weight: 800;
+  font-size: 0.8rem;
+  padding: 2px 6px;
+  border-radius: 4px;
+}
+
+.menu-dish-desc {
+  font-size: 0.8rem;
+  color: #94A3B8;
+  line-height: 1.4;
+}
+
+/* ==========================================================================
+   Level Select Grid
+   ========================================================================== */
+.level-select-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-top: 12px;
+}
+
+.level-card {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: #0F172A;
+  border: 1px solid #334155;
+  border-radius: 10px;
+  padding: 12px 18px;
+  transition: border-color 0.15s ease;
+}
+
+.level-card:hover {
+  border-color: #F59E0B;
+}
+
+.level-card-num {
+  font-size: 0.8rem;
+  color: #F59E0B;
+  font-weight: 800;
+}
+
+.level-card-title {
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: #F8FAFC;
+}
+
+.level-card-sub {
+  font-size: 0.82rem;
+  color: #94A3B8;
+}
+
+.level-card-right {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.level-card-goal {
+  font-size: 0.9rem;
+  color: #34D399;
+  font-weight: 700;
+}
+
+.btn-play-level {
+  background: #10B981;
+  color: #FFF;
+  border: none;
+  font-weight: 800;
+  padding: 8px 18px;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.btn-play-level:hover {
+  background: #059669;
+}

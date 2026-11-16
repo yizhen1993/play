@@ -1,0 +1,15 @@
+{
+  "name": "malaysian-cooking-dash",
+  "version": "1.0.0",
+  "description": "Malaysian Cooking Dash — Authentic Kopitiam & Mamak Rush Time Management Game",
+  "main": "server/server.js",
+  "type": "module",
+  "scripts": {
+    "start": "node server/server.js",
+    "dev": "node server/server.js"
+  },
+  "dependencies": {
+    "express": "^4.19.2",
+    "cors": "^2.8.5"
+  }
+}

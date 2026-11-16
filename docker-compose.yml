@@ -1,0 +1,18 @@
+version: '3.8'
+
+services:
+  play-app:
+    build: .
+    container_name: play-app
+    restart: unless-stopped
+    ports:
+      - "3010:3000"
+    environment:
+      - PORT=3000
+      - NODE_ENV=production
+    networks:
+      - kopipeng-net
+
+networks:
+  kopipeng-net:
+    external: true
